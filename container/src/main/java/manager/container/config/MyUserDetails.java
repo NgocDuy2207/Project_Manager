@@ -1,6 +1,6 @@
-package manager.container.entity;
-
-import jdk.javadoc.internal.doclets.toolkit.taglets.SeeTaglet;
+package manager.container.config;
+import manager.container.entity.Role;
+import manager.container.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +16,7 @@ public class MyUserDetails implements UserDetails {
         this.user = user;
     }
 
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<Role> roles = user.getRoles();
@@ -26,6 +27,9 @@ public class MyUserDetails implements UserDetails {
         }
         return authorities;
 
+    }
+    public Long getID(){
+        return user.getId();
     }
 
     @Override
@@ -56,5 +60,14 @@ public class MyUserDetails implements UserDetails {
     @Override
     public boolean isEnabled() {
         return user.isEnabled();
+    }
+
+
+
+
+    public UserDetails loadUserByUsername(String userName) {
+       return new MyUserDetails(new User(userName, user.getPassword(), user.getRoles()));
+
+
     }
 }

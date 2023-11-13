@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -39,9 +40,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/").hasAnyAuthority()
-                .antMatchers("/new").hasAnyAuthority()
-                .antMatchers("/edit/**").hasAnyAuthority()
+                .antMatchers("/").hasAnyAuthority("ADMIN")
+                .antMatchers("/new").hasAnyAuthority("ADMIN")
+                .antMatchers("/edit/**").hasAnyAuthority("ADMIN")
                 .antMatchers("/delete/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
@@ -49,7 +50,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout().permitAll()
                 .and()
-                .exceptionHandling().accessDeniedPage("/403")
+                .exceptionHandling().accessDeniedPage("/403");
+        // Thêm một lớp Filter kiểm tra jwt
+
         ;
     }
 }

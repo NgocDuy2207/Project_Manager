@@ -1,6 +1,5 @@
 package manager.container.service;
-
-import manager.container.entity.MyUserDetails;
+import manager.container.config.MyUserDetails;
 import manager.container.entity.User;
 import manager.container.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;

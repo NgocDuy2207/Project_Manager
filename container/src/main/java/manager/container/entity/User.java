@@ -34,4 +34,8 @@ public class User {
     public User() {
 
     }
+
+    public User(String userName, String password, Set<Role> roles) {
+
+    }
 }
